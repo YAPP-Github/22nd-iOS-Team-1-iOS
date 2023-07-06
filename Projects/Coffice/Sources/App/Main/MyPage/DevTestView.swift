@@ -45,7 +45,6 @@ extension DevTestView {
         "textField with BindingState",
         text: viewStore.binding(\.$textFieldStringWithBindingState)
       )
-      .textFieldStyle(.plain)
       .frame(height: 35)
       .padding(.horizontal, 5)
       .padding(.trailing, 25)
@@ -66,7 +65,6 @@ extension DevTestView {
           send: DevTest.Action.textFieldStringDidChange
         )
       )
-      .textFieldStyle(.plain)
       .frame(height: 35)
       .padding(.horizontal, 5)
       .padding(.trailing, 25)
