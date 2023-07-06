@@ -16,9 +16,7 @@ struct MainCoordinatorView: View {
   var body: some View {
     WithViewStore(store) { viewStore in
       ZStack {
-        NavigationView {
-          mainView
-        }
+        mainView
         tabBarView
 
         IfLetStore(
@@ -55,31 +53,42 @@ struct MainCoordinatorView: View {
   }
 
   var mainView: some View {
-    WithViewStore(store, observe: \.selectedTab) { viewStore in
-      Group {
-        switch viewStore.state {
-        case .search:
+    WithViewStore(store) { viewStore in
+      ZStack {
+        NavigationView {
           SearchCoordinatorView(
             store: store.scope(
               state: \.searchState,
               action: MainCoordinator.Action.search
             )
           )
-        case .savedList:
+          .background(.white)
+
+        }
+        .zIndex(viewStore.selectedTab == .search ? 100 : 0)
+
+        NavigationView {
           SavedListCoordinatorView(
             store: store.scope(
               state: \.savedListState,
               action: MainCoordinator.Action.savedList
             )
           )
-        case .myPage:
+          .background(.white)
+        }
+        .zIndex(viewStore.selectedTab == .savedList ? 100 : 0)
+
+        NavigationView {
           MyPageCoordinatorView(
             store: store.scope(
               state: \.myPageState,
               action: MainCoordinator.Action.myPage
             )
           )
+          .background(.white)
+
         }
+        .zIndex(viewStore.selectedTab == .myPage ? 100 : 0)
       }
     }
   }

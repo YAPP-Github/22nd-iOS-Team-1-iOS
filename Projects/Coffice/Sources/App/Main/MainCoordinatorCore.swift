@@ -51,19 +51,19 @@ struct MainCoordinator: ReducerProtocol {
   }
 
   var body: some ReducerProtocolOf<MainCoordinator> {
-    Scope(state: \State.homeState, action: /Action.home) {
+    Scope(state: \.homeState, action: /Action.home) {
       HomeCoordinator()
     }
 
-    Scope(state: \State.searchState, action: /Action.search) {
+    Scope(state: \.searchState, action: /Action.search) {
       SearchCoordinator()
     }
 
-    Scope(state: \State.savedListState, action: /Action.savedList) {
+    Scope(state: \.savedListState, action: /Action.savedList) {
       SavedListCoordinator()
     }
 
-    Scope(state: \State.myPageState, action: /Action.myPage) {
+    Scope(state: \.myPageState, action: /Action.myPage) {
       MyPageCoordinator()
     }
 

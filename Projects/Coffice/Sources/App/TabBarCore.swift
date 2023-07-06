@@ -23,9 +23,9 @@ struct TabBar: ReducerProtocol {
 
     var selectedTab: TabBarItemType = .search {
       didSet {
-        tabBarItemViewStates = tabBarItemTypes.map {
-          TabBarItemViewState(type: $0, isSelected: selectedTab == $0)
-        }
+          TabBarItemType.allCases.forEach {
+              tabBarItemViewStates[$0.index].isSelected = selectedTab == $0
+          }
       }
     }
   }
@@ -50,15 +50,19 @@ struct TabBar: ReducerProtocol {
 }
 
 extension TabBar.State {
-  enum TabBarItemType: CaseIterable {
+  enum TabBarItemType: Int, CaseIterable {
     case search
     case savedList
     case myPage
+
+      var index: Int {
+          rawValue
+      }
   }
 
   struct TabBarItemViewState: Hashable {
     let type: TabBarItemType
-    let isSelected: Bool
+      var isSelected: Bool
 
     init(type: TabBarItemType, isSelected: Bool = false) {
       self.type = type

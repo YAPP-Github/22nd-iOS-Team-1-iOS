@@ -10,17 +10,17 @@ import SwiftUI
 import TCACoordinators
 
 struct MyPageCoordinator: ReducerProtocol {
-  struct State: Equatable, IndexedRouterState {
-    static let initialState: State = .init(
-      routes: [.root(.myPage(.init()), embedInNavigationView: false)]
-    )
-
-    var routes: [Route<MyPageScreen.State>]
+  struct State: Equatable, IdentifiedRouterState {
+    static let initialState = Self(routes: [
+      .root(.myPage(.init()), embedInNavigationView: false)
+    ])
+    var routes: IdentifiedArrayOf<Route<MyPageScreen.State>>
+//    var routeIDs: IdentifiedArrayOf<Route<MyPageScreen.State.ID>>
   }
 
-  enum Action: IndexedRouterAction, Equatable {
-    case routeAction(Int, action: MyPageScreen.Action)
-    case updateRoutes([Route<MyPageScreen.State>])
+  enum Action: IdentifiedRouterAction, Equatable {
+    case updateRoutes(IdentifiedArrayOf<Route<MyPageScreen.State>>)
+    case routeAction(MyPageScreen.State.ID, action: MyPageScreen.Action)
   }
 
   var body: some ReducerProtocolOf<MyPageCoordinator> {

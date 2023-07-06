@@ -19,9 +19,9 @@ struct MyPageView: View {
   var body: some View {
     WithViewStore(store) { viewStore in
       mainView
-        .onAppear {
-          viewStore.send(.onAppear)
-        }
+//        .onAppear {
+//          viewStore.send(.onAppear)
+//        }
     }
   }
 

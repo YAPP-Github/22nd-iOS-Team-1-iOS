@@ -24,7 +24,7 @@ struct CafeApp: App {
       AppCoordinatorView(
         store: .init(
           initialState: .initialState,
-          reducer: AppCoordinator()
+          reducer: AppCoordinator()._printChanges()
         )
       )
       .onOpenURL { url in

@@ -9,13 +9,40 @@ import ComposableArchitecture
 import TCACoordinators
 
 struct MyPageScreen: ReducerProtocol {
-  enum State: Equatable {
+  enum State: Equatable, Identifiable {
     /// 메인 페이지
     case myPage(MyPage.State)
     case serviceTerms(ServiceTerms.State)
     case privacyPolicy(PrivacyPolicy.State)
     case openSources(OpenSources.State)
     case devTest(DevTest.State)
+
+      var id: ID {
+        switch self {
+        case .myPage:
+          return .myPage
+        case .serviceTerms:
+          return .serviceTerms
+        case .privacyPolicy:
+          return .privacyPolicy
+        case .openSources:
+          return .openSources
+        case .devTest:
+          return .devTest
+        }
+      }
+
+      enum ID: Identifiable {
+        case myPage
+        case serviceTerms
+        case privacyPolicy
+        case openSources
+        case devTest
+
+        var id: ID {
+          self
+        }
+      }
   }
 
   enum Action: Equatable {
