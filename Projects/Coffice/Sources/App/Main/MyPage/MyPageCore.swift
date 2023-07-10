@@ -59,12 +59,15 @@ struct MyPage: ReducerProtocol {
       return versionNumber ?? "1.0.0"
     }
 
+    @BindingState var shouldShowBottomSheet = false
+
     init() {
       menuItems = MenuType.allCases.map(MenuItem.init)
     }
   }
 
-  enum Action: Equatable {
+  enum Action: Equatable, BindableAction {
+    case binding(BindingAction<State>)
     case onAppear
     case menuButtonTapped(MenuItem)
     case editProfileButtonTapped
@@ -86,8 +89,13 @@ struct MyPage: ReducerProtocol {
   @Dependency(\.loginClient) private var loginClient
 
   var body: some ReducerProtocolOf<MyPage> {
+    BindingReducer()
     Reduce { state, action in
       switch action {
+      case .binding(\.$shouldShowBottomSheet):
+        debugPrint("MyPage - shouldShowBottomSheet")
+        return .none
+
       case .onAppear:
         return .run { send in
           let userData = try await loginClient.fetchUserData()
@@ -115,6 +123,7 @@ struct MyPage: ReducerProtocol {
           return EffectTask(value: .pushToContactView)
 
         case .versionInformation:
+          state.shouldShowBottomSheet = true
           return .none
 
         case .logout:

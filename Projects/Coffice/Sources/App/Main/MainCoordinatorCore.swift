@@ -105,6 +105,10 @@ struct MainCoordinator: ReducerProtocol {
         state.commonBottomSheetState = commonBottomSheetState
         return .none
 
+      case .myPage(.routeAction(_, action: .myPage(action: .binding(\.$shouldShowBottomSheet)))):
+        debugPrint("MainCoordinator - shouldShowBottomSheet")
+        return .none
+
       case .onAppear:
         return .none
 
