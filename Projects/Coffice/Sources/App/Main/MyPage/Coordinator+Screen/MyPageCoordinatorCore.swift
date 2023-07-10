@@ -57,10 +57,6 @@ struct MyPageCoordinator: ReducerProtocol {
       case .routeAction(_, action: .editProfile(.showTabBar)):
         return EffectTask(value: .showTabBar)
 
-      case .routeAction(_, action: .myPage(.binding(\.$shouldShowBottomSheet))):
-        debugPrint("MyPageCoordinator - shouldShowBottomSheet")
-        return .none
-
       default:
         return .none
       }

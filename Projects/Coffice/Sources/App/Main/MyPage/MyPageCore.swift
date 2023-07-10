@@ -93,7 +93,6 @@ struct MyPage: ReducerProtocol {
     Reduce { state, action in
       switch action {
       case .binding(\.$shouldShowBottomSheet):
-        debugPrint("MyPage - shouldShowBottomSheet")
         return .none
 
       case .onAppear:

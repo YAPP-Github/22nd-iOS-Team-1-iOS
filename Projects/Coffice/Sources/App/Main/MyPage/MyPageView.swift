@@ -27,12 +27,13 @@ struct MyPageView: View {
           Text("Test Pop up")
             .frame(maxWidth: .infinity)
             .frame(height: 200)
-            .background(Color(red: 0.85, green: 0.8, blue: 0.95))
+            .background(.gray)
             .cornerRadius(30.0)
         } customize: {
-          $0.type(.floater(verticalPadding: -100, horizontalPadding: 10, useSafeAreaInset: true))
+          $0.type(.floater(verticalPadding: 0, horizontalPadding: 0, useSafeAreaInset: false))
             .position(.bottom)
             .dragToDismiss(true)
+            .isOpaque(true)
         }
     }
   }

@@ -16,12 +16,43 @@ struct MainCoordinatorView: View {
   var body: some View {
     WithViewStore(store) { viewStore in
       ZStack {
-        NavigationView {
-          mainView
-        }
-
-        if viewStore.shouldShowTabBarView {
-          tabBarView
+        TabView {
+          NavigationView {
+            SearchCoordinatorView(
+              store: store.scope(
+                state: \.searchState,
+                action: MainCoordinator.Action.search
+              )
+            )
+          }
+          .tabItem {
+            Image(systemName: "house")
+            Text("홈")
+          }
+          NavigationView {
+            SavedListCoordinatorView(
+              store: store.scope(
+                state: \.savedListState,
+                action: MainCoordinator.Action.savedList
+              )
+            )
+          }
+          .tabItem {
+            Image(systemName: "square.and.pencil")
+            Text("저장")
+          }
+          NavigationView {
+            MyPageCoordinatorView(
+              store: store.scope(
+                state: \.myPageState,
+                action: MainCoordinator.Action.myPage
+              )
+            )
+          }
+          .tabItem {
+            Image(systemName: "gear")
+            Text("MY")
+          }
         }
 
         IfLetStore(
@@ -61,50 +92,6 @@ struct MainCoordinatorView: View {
       }
       .onAppear {
         viewStore.send(.onAppear)
-      }
-    }
-  }
-
-  var mainView: some View {
-    WithViewStore(store, observe: \.selectedTab) { viewStore in
-      Group {
-        switch viewStore.state {
-        case .search:
-          SearchCoordinatorView(
-            store: store.scope(
-              state: \.searchState,
-              action: MainCoordinator.Action.search
-            )
-          )
-        case .savedList:
-          SavedListCoordinatorView(
-            store: store.scope(
-              state: \.savedListState,
-              action: MainCoordinator.Action.savedList
-            )
-          )
-        case .myPage:
-          MyPageCoordinatorView(
-            store: store.scope(
-              state: \.myPageState,
-              action: MainCoordinator.Action.myPage
-            )
-          )
-        }
-      }
-    }
-  }
-
-  var tabBarView: some View {
-    WithViewStore(store) { viewStore in
-      VStack {
-        Spacer()
-        TabBarView(
-          store: store.scope(
-            state: \.tabBarState,
-            action: MainCoordinator.Action.tabBar
-          )
-        )
       }
     }
   }
